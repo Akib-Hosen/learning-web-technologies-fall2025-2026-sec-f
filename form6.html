@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile Picture</title>
+</head>
+<body>
+
+<form action="form7.html" method="post" enctype="multipart/form-data" id="profileForm" onsubmit="return test()">
+
+    <fieldset style="width: 320px;">
+        <legend><b>Profile Picture</b></legend>
+
+        <label>User Id</label>
+        <input type="text" id="userId" name="userId" onblur="testUserId()">
+        <p id="userIdError"></p>
+
+        <label>Picture</label>
+        <input type="file" id="picture" name="picture" onchange="testPicture()">
+        <p id="pictureError"></p>
+
+        <hr>
+        <input type="submit" value="Submit">
+    </fieldset>
+
+</form>
+
+<script>
+
+    function testUserId() {
+        let userId = document.getElementById('userId').value.trim();
+        let userIdError = document.getElementById('userIdError');
+
+        if (userId === "") {
+            userIdError.innerHTML = "User Id cannot be empty.";
+            userIdError.style.color = "red";
+            return;
+        }
+
+        if (isNaN(userId)) {
+            userIdError.innerHTML = "User Id must be a number.";
+            userIdError.style.color = "red";
+            return;
+        }
+
+        let num = Number(userId);
+        if (num <= 0) {
+            userIdError.innerHTML = "User Id must be a positive number.";
+            userIdError.style.color = "red";
+            return;
+        }
+
+        userIdError.innerHTML = "";
+    }
+
+    function testPicture() {
+        let picture = document.getElementById('picture').value;
+        let pictureError = document.getElementById('pictureError');
+
+        if (picture === "") {
+            pictureError.innerHTML = "Picture cannot be empty.";
+            pictureError.style.color = "red";
+        } else {
+            pictureError.innerHTML = "";
+        }
+    }
+
+    function test() {
+        testUserId();
+        testPicture();
+
+        let userIdError = document.getElementById('userIdError').innerHTML;
+        let pictureError = document.getElementById('pictureError').innerHTML;
+
+        return userIdError === "" && pictureError === "";
+    }
+
+</script>
+
+</body>
+</html>

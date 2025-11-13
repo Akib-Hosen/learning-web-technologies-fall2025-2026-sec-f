@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PERSON PROFILE</title>
+</head>
+<body>
+
+<form action="" method="post" enctype="multipart/form-data" onsubmit="return test()">
+    <table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse; width: 500px;">
+
+        <tr>
+            <td colspan="3" style="text-align: center; font-weight: bold; font-size: 22px; height: 60px;">
+                PERSON PROFILE
+            </td>
+        </tr>
+
+        <tr>
+            <td style="width: 120px;">Name</td>
+            <td>
+                <input type="text" id="name" name="name" value="" onblur="testName()" style="width: 55%;">
+                <p id="nameError" style="color:red; font-size:12px; margin:2px 0 0 0;"></p>
+            </td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>Email</td>
+            <td>
+                <input type="text" id="email" name="email" value="" onblur="testEmail()" style="width: 55%;">
+                <p id="emailError" style="color:red; font-size:12px; margin:2px 0 0 0;"></p>
+            </td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>Gender</td>
+            <td>
+                <label><input type="radio" name="gender" value="Male" onclick="testGender()"> Male</label>
+                <label><input type="radio" name="gender" value="Female" onclick="testGender()"> Female</label>
+                <label><input type="radio" name="gender" value="Other" onclick="testGender()"> Other</label>
+                <p id="genderError" style="color:red; font-size:12px; margin:2px 0 0 0;"></p>
+            </td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>Date of Birth</td>
+            <td>
+                <input type="text" id="dd" name="dd" size="3" onblur="testDob()"> /
+                <input type="text" id="mm" name="mm" size="3" onblur="testDob()"> /
+                <input type="text" id="yyyy" name="yyyy" size="4" onblur="testDob()">
+                <span>(dd/mm/yyyy)</span>
+                <p id="dobError" style="color:red; font-size:12px; margin:2px 0 0 0;"></p>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Blood Group</td>
+            <td>
+                <select id="blood" name="blood" onchange="testBlood()">
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                </select>
+                <p id="bloodError" style="color:red; font-size:12px; margin:2px 0 0 0;"></p>
+            </td>
+            <td></td>
+        </tr>
+
+
+        <tr>
+            <td>Degree</td>
+            <td>
+                <label><input type="checkbox" name="degree" value="SSC" onclick="testDegree()"> SSC</label>
+                <label><input type="checkbox" name="degree" value="HSC" onclick="testDegree()"> HSC</label>
+                <label><input type="checkbox" name="degree" value="BSc" onclick="testDegree()"> BSc.</label>
+                <label><input type="checkbox" name="degree" value="MSc" onclick="testDegree()"> MSc.</label>
+                <p id="degreeError" style="color:red; font-size:12px; margin:2px 0 0 0;"></p>
+            </td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>Photo</td>
+            <td colspan="3">
+                <input type="file" id="photo" name="photo" onchange="testPhoto()">
+                <p id="photoError" style="color:red; font-size:12px; margin:2px 0 0 0;"></p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="height: 20px;">
+
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3" style="text-align: right;">
+                <input type="submit" value="Submit">
+                <input type="reset" value="Reset">
+            </td>
+        </tr>
+    </table>
+</form>
+
+<script>
+    let nameError   = document.getElementById('nameError');
+    let emailError  = document.getElementById('emailError');
+    let genderError = document.getElementById('genderError');
+    let dobError    = document.getElementById('dobError');
+    let bloodError  = document.getElementById('bloodError');
+    let degreeError = document.getElementById('degreeError');
+    let photoError  = document.getElementById('photoError');
+
+    function isLetter(ch) {
+        return (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z');
+    }
+
+    function testName() {
+        let name = document.getElementById('name').value;
+        name = name.trim();
+
+        if (name === "") {
+            nameError.innerHTML = "Name cannot be empty.";
+            nameError.style.color = "red";
+            return;
+        }
+
+        let parts = name.split(" ");
+        let words = [];
+        for (let i = 0; i < parts.length; i++) {
+            if (parts[i] !== "") {
+                words.push(parts[i]);
+            }
+        }
+        if (words.length < 2) {
+            nameError.innerHTML = "Name must contain at least two words.";
+            nameError.style.color = "red";
+            return;
+        }
+
+        if (!isLetter(name[0])) {
+            nameError.innerHTML = "Name must start with a letter.";
+            nameError.style.color = "red";
+            return;
+        }
+
+        for (let i = 0; i < name.length; i++) {
+            let ch = name[i];
+            let ok = isLetter(ch) || ch === '.' || ch === '-' || ch === ' ';
+            if (!ok) {
+                nameError.innerHTML = "Name can contain only a-z or A-Z or dot(.) or dash(-).";
+                nameError.style.color = "red";
+                return;
+            }
+        }
+        nameError.innerHTML = "";
+    }
+
+    function testEmail() {
+        let email = document.getElementById('email').value;
+        email = email.trim();
+
+        if (email === "") {
+            emailError.innerHTML = "Email cannot be empty.";
+            emailError.style.color = "red";
+            return;
+        }
+
+        let atPos = email.indexOf("@");
+        let dotPos = -1;
+
+        if (atPos === -1) {
+            emailError.innerHTML = "Email must contain '@'.";
+            emailError.style.color = "red";
+            return;
+        }
+
+        for (let i = atPos + 1; i < email.length; i++) {
+            if (email[i] === ".") {
+                dotPos = i;
+                break;
+            }
+        }
+
+        if (dotPos === -1) {
+            emailError.innerHTML = "Email must contain a '.' after '@'.";
+        } else if (atPos === 0 || dotPos === atPos + 1 || dotPos === email.length - 1) {
+            emailError.innerHTML = "Invalid email format. Use anything@example.com.";
+        } else {
+            emailError.innerHTML = "";
+        }
+
+        if (emailError.innerHTML !== "") {
+            emailError.style.color = "red";
+        }
+    }
+
+
+    function testGender() {
+        let selected = document.querySelector('input[name="gender"]:checked');
+        if (selected == null) {
+            genderError.innerHTML = "At least one option has to be selected.";
+            genderError.style.color = "red";
+        } else {
+            genderError.innerHTML = "";
+        }
+    }
+
+    function testDob() {
+        let dd = document.getElementById('dd').value.trim();
+        let mm = document.getElementById('mm').value.trim();
+        let yyyy = document.getElementById('yyyy').value.trim();
+
+        if (dd === "" || mm === "" || yyyy === "") {
+            dobError.innerHTML = "Date of Birth cannot be empty.";
+            dobError.style.color = "red";
+            return;
+        }
+
+        if (isNaN(dd) || isNaN(mm) || isNaN(yyyy)) {
+            dobError.innerHTML = "Day, month and year must be numbers.";
+            dobError.style.color = "red";
+            return;
+        }
+
+        let d = Number(dd);
+        let m = Number(mm);
+        let y = Number(yyyy);
+
+        if (d < 0 || d > 31 || m < 1 || m > 12 || y < 1900 || y > 2016) {
+            dobError.innerHTML = "dd: 0-31, mm: 1-12, yyyy: 1900-2016.";
+            dobError.style.color = "red";
+            return;
+        }
+
+        dobError.innerHTML = "";
+    }
+
+    function testDegree() {
+        let selected = document.querySelectorAll('input[name="degree"]:checked');
+        if (selected.length === 0) {
+            degreeError.innerHTML = "At least one degree has to be selected.";
+            degreeError.style.color = "red";
+        } else {
+            degreeError.innerHTML = "";
+        }
+    }
+
+    function testBlood() {
+        let blood = document.getElementById('blood').value;
+        if (blood === "") {
+            bloodError.innerHTML = "Blood group must be selected.";
+            bloodError.style.color = "red";
+        } else {
+            bloodError.innerHTML = "";
+        }
+    }
+
+    function testPhoto() {
+        let photo = document.getElementById('photo').value;
+        if (photo === "") {
+            photoError.innerHTML = "Photo cannot be empty.";
+            photoError.style.color = "red";
+        } else {
+            photoError.innerHTML = "";
+        }
+    }
+
+
+    function test() {
+        testName();
+        testEmail();
+        testGender();
+        testDob();
+        testBlood();
+        testDegree();
+        testPhoto();
+
+        return nameError.innerHTML === "" && emailError.innerHTML === "" && genderError.innerHTML === "" && dobError.innerHTML === "" && bloodError.innerHTML === "" && degreeError.innerHTML === "" && photoError.innerHTML === "";
+
+    }
+</script>
+
+</body>
+</html>

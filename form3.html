@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Date of Birth</title>
+</head>
+<body>
+    <form action="form4.html" method="post" id="dobForm" onsubmit="return test()">
+        
+        <fieldset style="width: 220px; padding: 10px;">
+            <legend><b>Date of Birth</b></legend>
+
+            <table>
+                <tr>
+                    <th>dd</th>
+                    <th>mm</th>
+                    <th>yyyy</th>
+                </tr>
+
+                <tr>
+                    <td><input type="text" id="dd" name="dd" size="3" onblur="testDob()"></td>
+                    <td><input type="text" id="mm" name="mm" size="3" onblur="testDob()"></td>
+                    <td><input type="text" id="yyyy" name="yyyy" size="4" onblur="testDob()"></td>
+                </tr>
+            </table>
+
+            <p id="dobError"></p>
+            <hr>
+
+            <input type="submit" value="Submit">
+        </fieldset>
+    </form>
+
+<script>
+
+    function testDob() {
+        let dd = document.getElementById('dd').value.trim();
+        let mm = document.getElementById('mm').value.trim();
+        let yyyy = document.getElementById('yyyy').value.trim();
+
+        let dobError = document.getElementById('dobError');
+
+        if (dd === "" || mm === "" || yyyy === "") {
+            dobError.innerHTML = "Date of Birth cannot be empty.";
+            dobError.style.color = "red";
+            return;
+        }
+
+        if (isNaN(dd) || isNaN(mm) || isNaN(yyyy)) {
+            dobError.innerHTML = "Day, month and year must be numbers.";
+            dobError.style.color = "red";
+            return;
+        }
+
+        let d = Number(dd);
+        let m = Number(mm);
+        let y = Number(yyyy);
+
+        if (d < 0 || d > 31 || m < 1 || m > 12 || y < 1900 || y > 2016) {
+            dobError.innerHTML = "dd: 0-31, mm: 1-12, yyyy: 1900-2016.";
+            dobError.style.color = "red";
+            return;
+        }
+
+        dobError.innerHTML = "";
+    }
+
+    function test() {
+        testDob();
+        let dobError = document.getElementById('dobError');
+        return dobError.innerHTML === "";
+    }
+
+</script>
+
+</body>
+</html>

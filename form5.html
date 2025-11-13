@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blood Group</title>
+</head>
+<body>
+    <form action="form6.html" method="post" id="bloodForm" onsubmit="return test()">
+        Blood Group
+        <select id="blood" name="blood" onchange="testBlood()">
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+        </select>
+
+        <p id="bloodError"></p>
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        let bloodError = document.getElementById('bloodError');
+
+        function testBlood() {
+            let blood = document.getElementById('blood').value;
+            if (blood === "") {
+                bloodError.innerHTML = "Blood group must be selected.";
+                bloodError.style.color = "red";
+            } else {
+                bloodError.innerHTML = "";
+            }
+        }
+
+        function test() {
+            testBlood();
+            return bloodError.innerHTML === "";
+        }
+    </script>
+</body>
+</html>
