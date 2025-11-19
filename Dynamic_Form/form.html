@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <style>
+        .error-msg {
+            color: red;
+            font-size: 12px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <label for="inputLabel">Field Name:</label>
+        <input type="text" id="inputLabel">
+
+        <label for="inputType">Data Type:</label>
+        <select id="inputType">
+            <option value="text">Username</option>
+            <option value="password">Password</option>
+            <option value="email">Email</option>
+            <option value="tel">Phone</option>
+            <option value="text">Address</option>
+            <option value="date">Date Of Birth</option>
+        </select>
+
+        <button id="addFieldBtn">Add Field</button>
+    </div>
+    <br>
+
+    <div id="fieldsArea">
+        <p id="noFieldsMessage"></p>
+    </div>
+
+    <br>
+    <button id="saveDataBtn" style="display:none;">Save</button>
+
+    <div id="resultSection" style="display:none;">
+        <hr>
+        <h3>Saved Information:</h3>
+        <div id="savedDataContainer"></div>
+    </div>
+
+    <script>
+        const addFieldBtn = document.getElementById('addFieldBtn');
+        const saveDataBtn = document.getElementById('saveDataBtn');
+        const inputType = document.getElementById('inputType');
+        const inputLabel = document.getElementById('inputLabel');
+        const fieldsArea = document.getElementById('fieldsArea');
+        const noFieldsMessage = document.getElementById('noFieldsMessage');
+        const savedDataContainer = document.getElementById('savedDataContainer');
+        const resultSection = document.getElementById('resultSection');
+
+        let fieldCounter = 0;
+
+        addFieldBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+            const label = inputLabel.value.trim();
+            const selectedOption = inputType.options[inputType.selectedIndex];
+            const fieldName = label || selectedOption.text;
+            const fieldType = selectedOption.value;
+            createField(fieldName, fieldType);
+            inputLabel.value = '';
+            inputLabel.focus();
+        });
+
+        function createField(fieldName, fieldType) {
+            fieldCounter++;
+            noFieldsMessage.style.display = 'none';
+            saveDataBtn.style.display = 'block';
+            resultSection.style.display = 'none';
+            const fieldRow = document.createElement('div');
+            fieldRow.id = `field-row-${fieldCounter}`;
+            fieldRow.style.marginBottom = '10px';
+            fieldRow.innerHTML = `
+                <label><strong>${fieldName}:</strong></label>
+                <input type="${fieldType}" class="dynamic-input" data-label="${fieldName}">
+                <button onclick="deleteField(${fieldCounter})">Delete</button>
+                <div class="error-msg" id="error-${fieldCounter}">This field is required</div>
+            `;
+            fieldsArea.appendChild(fieldRow);
+        }
+
+        function deleteField(id) {
+            const fieldRow = document.getElementById(`field-row-${id}`);
+            if (fieldRow) {
+                fieldRow.remove();
+            }
+            if (fieldsArea.children.length === 1) {
+                noFieldsMessage.style.display = 'block';
+                saveDataBtn.style.display = 'none';
+                resultSection.style.display = 'none';
+            }
+        }
+
+        saveDataBtn.addEventListener('click', () => {
+            const inputs = document.querySelectorAll('.dynamic-input');
+            let isValid = true;
+            const formData = [];
+
+            document.querySelectorAll('.error-msg').forEach(el => el.style.display = 'none');
+
+            inputs.forEach(input => {
+                const value = input.value.trim();
+                const errorMsg = document.getElementById(`error-${input.closest('div').id.replace('field-row-', '')}`);
+                const labelText = input.getAttribute('data-label');
+
+                let error = null;
+
+                if (!value) {
+                    error = "This field is required";
+                } else if (input.type === 'email') {
+                    if (!value.includes('@') || !value.includes('.')) {
+                        error = "Invalid email address";
+                    }
+                } else if (input.type === 'tel') {
+                    if (value.replace(/\D/g, '').length < 11) {
+                        error = "Phone number should be at least 11 digits";
+                    }
+                } else if (input.type === 'text' && labelText === "Username") {
+                    if (value.length < 3) {
+                        error = "Username must be at least 3 characters long";
+                    }
+                } else if (input.type === 'password') {
+                    if (value.length < 6) {
+                        error = "Password must be at least 6 characters long";
+                    }
+                }
+
+                if (error) {
+                    isValid = false;
+                    errorMsg.textContent = error;
+                    errorMsg.style.display = 'block';
+                } else {
+                    formData.push({ label: labelText, value });
+                }
+            });
+
+            if (isValid) {
+                displaySavedData(formData);
+            }
+        });
+
+        function displaySavedData(data) {
+            savedDataContainer.innerHTML = '';
+            data.forEach(item => {
+                const div = document.createElement('div');
+                div.innerHTML = `<strong>${item.label}:</strong> ${item.value}`;
+                savedDataContainer.appendChild(div);
+            });
+            resultSection.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
