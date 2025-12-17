@@ -84,7 +84,7 @@
 
 .regLine {
     display: flex;
-    gap: 6px;
+    gap: 10px;
     margin-top: 10px;
 }
 
@@ -92,6 +92,7 @@
     text-decoration: none;
     color: #EC009B;
     font-weight: bold;
+    padding: 17px 0;
 }
 
 .signBanner {

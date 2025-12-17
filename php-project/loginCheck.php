@@ -25,8 +25,8 @@ try {
         throw new Exception("Password must be at least 6 characters!");
     }
 
-    $demoUser = "admin@test.com";
-    $demoPass = "123456";
+    $demoUser = "test@admin.com";
+    $demoPass = "1234";
 
     if ($username === $demoUser && $password === $demoPass) {
         $_SESSION['status'] = true;
@@ -39,7 +39,7 @@ try {
 
 } catch (Exception $e) {
     echo "<h3 style='color:red;text-align:center;margin-top:40px'>
-            ❌ ".$e->getMessage()."
+            ! ".$e->getMessage()."
           </h3>";
     echo "<p style='text-align:center'>
             <a href='login.php'>Back to Login</a>
