@@ -52,7 +52,7 @@ if(isset($_SESSION['status']) === true){
 
         <div class="regLine">
             <p>New here?</p>
-            <a class="Register" href="#">Register</a>
+            <a class="Register" href="#">Register Now</a>
         </div>
     </div>
 </section>
