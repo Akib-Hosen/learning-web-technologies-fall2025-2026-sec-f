@@ -1,0 +1,103 @@
+* {
+    font-family: sans-serif;
+}
+
+.logo {
+    display: flex;
+}
+
+.logoText {
+    color: #00acd4;
+}
+
+.navLink {
+    display: flex;
+    color: #EC009B;
+    text-decoration: none;
+    gap: 5px;
+}
+
+.logoArea {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.logoArea input {
+    border-radius: 5px;
+    border: 1px solid #6d7482;
+    color: #858D9E;
+    padding: 20px;
+    width: 320px;
+}
+
+.searchBtn {
+    background-color: #EC009B;
+    color: white;
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+}
+
+.pink {
+    background-color: #fde6f4;
+    height: 40px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: flex-end;
+    padding-right: 50px;
+}
+
+.loginBanner {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 40px 0;
+}
+
+.loginBox {
+    background: #fde6f4;
+    padding: 25px;
+    border-radius: 10px;
+    width: 320px;
+}
+
+.textField {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #EC009B;
+}
+
+#loginBtn {
+    width: 100%;
+    background: #EC009B;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.regLine {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.Register {
+    text-decoration: none;
+    color: #EC009B;
+    font-weight: bold;
+}
+
+.signBanner {
+    color: #EC009B;
+}
+
+.signText {
+    color: #6d7482;
+}
