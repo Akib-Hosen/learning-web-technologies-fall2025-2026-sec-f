@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Degree</title>
+</head>
+<body>
+    <form action="form5.html" method="post" id="degreeForm" onsubmit="return test()">
+
+        <fieldset style="width: 200px;">
+            <legend>Degree</legend>
+
+            <label><input type="checkbox" name="degree" value="SSC" onclick="testDegree()"> SSC</label>
+            <label><input type="checkbox" name="degree" value="HSC" onclick="testDegree()"> HSC</label>
+            <label><input type="checkbox" name="degree" value="BSc" onclick="testDegree()"> BSc</label>
+        </fieldset>
+        <p id="degreeError"></p>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        let degreeError = document.getElementById('degreeError');
+
+        function testDegree() {
+            let selected = document.querySelectorAll('input[name="degree"]:checked');
+            if (selected.length === 0) {
+                degreeError.innerHTML = "At least one degree has to be selected.";
+                degreeError.style.color = "red";
+            } else {
+                degreeError.innerHTML = "";
+            }
+        }
+
+        function test() {
+            testDegree();
+            return degreeError.innerHTML === "";
+        }
+    </script>
+</body>
+</html>

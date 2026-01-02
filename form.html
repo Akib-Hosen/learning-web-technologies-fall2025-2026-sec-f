@@ -1,23 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Form</title>
 </head>
 <body>
-    <h1>Login Form</h1>
-    <h2>Login Form</h2>
-    <form action="">
-        <label for="">Email</label>
+    <form action="form1.html" method="post" id="nameForm" onsubmit="return test()">
+        Name
         <br>
-        <input type="email" name="" id="">
-        <br>
-        <label for="">Password</label>
-        <br>
-        <input type="password" name="" id="">
-        <br><br>
-        <input type="submit" value="Login">
+        <input type="text" id="name" name="name" value="" onblur="testName()">
+        <p id="nameError"></p>
+        <input type="submit" value="Submit">
     </form>
+
+    <script>
+        let nameError = document.getElementById('nameError');
+
+        function isLetter(ch) {
+            return (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z');
+        }
+
+        function testName() {
+            let name = document.getElementById('name').value;
+            name = name.trim();
+
+            if (name === "") {
+                nameError.innerHTML = "Name cannot be empty.";
+                nameError.style.color = "red";
+                return;
+            }
+
+            let parts = name.split(" ");
+            let words = [];
+            for (let i = 0; i < parts.length; i++) {
+                if (parts[i] !== "") {
+                    words.push(parts[i]);
+                }
+            }
+            if (words.length < 2) {
+                nameError.innerHTML = "Name must contain at least two words.";
+                nameError.style.color = "red";
+                return;
+            }
+
+            if (!isLetter(name[0])) {
+                nameError.innerHTML = "Name must start with a letter.";
+                nameError.style.color = "red";
+                return;
+            }
+
+            for (let i = 0; i < name.length; i++) {
+                let ch = name[i];
+                let ok = isLetter(ch) || ch === '.' || ch === '-' || ch === ' ';
+                if (!ok) {
+                    nameError.innerHTML = "Name can contain only a-z or A-Z or dot(.) or dash(-))";
+                    nameError.style.color = "red";
+                    return;
+                }
+            }
+            nameError.innerHTML = "";
+        }
+
+        function test() {
+            testName();
+            return nameError.innerHTML === "";
+        }
+    </script>
 </body>
 </html>
